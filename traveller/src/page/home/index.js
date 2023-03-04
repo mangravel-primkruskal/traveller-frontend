@@ -61,7 +61,9 @@ export default function Home({ navigation }) {
                     alignItems: "center",
                   }}
                 >
-                  <AntDesign name="pluscircle" size={44} color="#F95656" />
+                  <TouchableOpacity onPress={() => {navigation.navigate(Login);}}>
+                    <AntDesign name="pluscircle" size={44} color="#F95656" />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View
@@ -82,10 +84,11 @@ export default function Home({ navigation }) {
               <View style={{ height: 160, width: "100%" }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                   {demoData.map((item) => (
-                    <View style={styles.imageContainer}>
+                    <TouchableOpacity style={styles.imageContainer}>
                       <Image
                         source={require("../../../assets/foto.jpeg")}
                         style={styles.image}
+                        
                       />
                       <View style={styles.imageText}>
                         <Text
@@ -101,7 +104,7 @@ export default function Home({ navigation }) {
                           YEDİGÖLLER
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </ScrollView>
               </View>
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 20,
     position: "absolute",
+    blurRadius:100
   },
   imageText: {
     flex: 1,
