@@ -29,7 +29,7 @@ export default function Home({ navigation }) {
       }}
     >
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <ScrollView showsVerticalScrollIndicator={false} >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{ backgroundColor: "#3D7734", flex: 1, marginBottom: 150 }}
           >
@@ -61,7 +61,11 @@ export default function Home({ navigation }) {
                     alignItems: "center",
                   }}
                 >
-                  <TouchableOpacity onPress={() => {navigation.navigate(Login);}}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(Login);
+                    }}
+                  >
                     <AntDesign name="pluscircle" size={44} color="#F95656" />
                   </TouchableOpacity>
                 </View>
@@ -82,13 +86,15 @@ export default function Home({ navigation }) {
               </View>
 
               <View style={{ height: 160, width: "100%" }}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                >
                   {demoData.map((item) => (
                     <TouchableOpacity style={styles.imageContainer}>
                       <Image
                         source={require("../../../assets/foto.jpeg")}
                         style={styles.image}
-                        
                       />
                       <View style={styles.imageText}>
                         <Text
@@ -108,47 +114,176 @@ export default function Home({ navigation }) {
                   ))}
                 </ScrollView>
               </View>
-
-              <View
-                style={{
-                  marginTop: 30,
-                  marginBottom: 30,
-                  justifyContent: "flex-start",
-                  width: "80%",
-                }}
-              >
-                <Text
-                  style={{ fontSize: 18, fontWeight: "700", color: "#4B9D3D" }}
-                >
-                  Moduma Göre
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
+              <View>
                 <View
                   style={{
-                    height: 80,
-                    width: 100,
-                    backgroundColor: "#70B962",
-                    borderRadius: 20,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginRight: 10,
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
                   }}
                 >
-                  <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Moduma Göre
+                  </Text>
                 </View>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#70B962",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#70B962",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#70B962",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View>
                 <View
                   style={{
-                    height: 80,
-                    width: 100,
-                    backgroundColor: "#70B962",
-                    borderRadius: 20,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginRight: 10,
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
                   }}
                 >
-                  <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Kalabalıklık Durumu
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#F28888",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>AZ</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#DE4343",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>ORTA</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      height: 60,
+                      width: 100,
+                      backgroundColor: "#E30505",
+                      borderRadius: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>ÇOK</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View>
+                <View
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Arkadaşlarınla Paylaş
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      height: 60,
+                      width: 220,
+                      borderRadius: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "#4B9D3D",
+                      }}
+                    >
+                      Sizi takip eden ... kişi
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    style={{
+                      height: 70,
+                      width: 70,
+                      backgroundColor: "lightgray",
+                      borderRadius: 35,
+                      marginRight: 20,
+                    }}
+                  ></TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -187,7 +322,7 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 20,
     position: "absolute",
-    blurRadius:100
+    blurRadius: 100,
   },
   imageText: {
     flex: 1,
