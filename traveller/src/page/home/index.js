@@ -283,7 +283,9 @@ export default function Home({ navigation }) {
                       borderRadius: 35,
                       marginRight: 20,
                     }}
-                  ></TouchableOpacity>
+                  >
+                    <Text>test</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

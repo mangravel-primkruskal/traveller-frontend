@@ -1,10 +1,13 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import { Text } from "react-native";
+import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from "../../page/home/index";
-import Maps from "../../page/maps";
-import CustomTabBar from "../CustomTabBar";
+import Home from '../../page/home';
+import Maps from '../../page/maps';
+import CustomTabBar from '../CustomTabBar';
+import Logout from '../../page/logout';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,20 +18,23 @@ export default function TabNavigatorComponent() {
         name="Anasayfa"
         options={{
           headerTitle: () => (
-            <Text style={{ fontSize: 24, fontWeight: "500", color: "white" }}>
+            <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>
               Keşfet
             </Text>
           ),
           headerRight: () => (
-            <Ionicons
-              name="notifications"
-              style={{ marginRight: 42 }}
-              size={24}
-              color="white"
-            />
+            <View style={{ flexDirection: 'row' }}>
+              <Ionicons
+                name="notifications"
+                style={{ marginRight: 16 }}
+                size={24}
+                color="white"
+              />
+              <Logout/>
+            </View>
           ),
           headerStyle: {
-            backgroundColor: "#3D7734",
+            backgroundColor: '#3D7734',
           },
         }}
         component={Home}

@@ -1,202 +1,130 @@
 import {
-    Image,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-  } from "react-native";
-  import React from "react";
-  // import colors from "../../constant/colors";
-  const cardViewHeight = 150;
-  
-  export default function UpdateProfile({ navigation }) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <View style={styles.cardView}>
-            <View style={styles.clickableImg}>
-              {/* <Image source={uri} style={styles.clickableImg}></Image> */}
-            </View>
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
+import CustomInput from "./CustomInput";
+import CustomButton from "./CustomButton";
+
+const cardViewHeight = 150;
+
+export default function UpdateProfile({ navigation }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleUpdate = () => {
+    // handle update logic here
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Username:", username);
+    console.log("Password:", password);
+    console.log("Confirm Password:", confirmPassword);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={styles.cardView}>
+          <View style={styles.clickableImg}>
+            {/* <Image source={uri} style={styles.clickableImg}></Image> */}
           </View>
         </View>
-  
-        <View style={styles.cardView2}></View>
-        <View style={styles.cardView2}></View>
-        <TextInput
-            style={{
-              backgroundColor: "#F4F4F4",
-              color: "#4B9D3D",
-              width: 300,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingLeft: 45,
-              paddingVertical: 5,
-              marginVertical:5
-            }}
-            placeholder="Ad Soyad"
-            placeholderTextColor={"#4B9D3D"}
-          />
-          <TextInput
-            style={{
-              backgroundColor: "#F4F4F4",
-              color: "#4B9D3D",
-              width: 300,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingLeft: 45,
-              paddingVertical: 5,
-              marginVertical:5
-            }}
-            placeholder="E-posta"
-            placeholderTextColor={"#4B9D3D"}
-          />
-          <TextInput
-            style={{
-              backgroundColor: "#F4F4F4",
-              color: "#4B9D3D",
-              width: 300,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingLeft: 45,
-              paddingVertical: 5,
-              marginVertical:5
-            }}
-            placeholder="Kullanıcı Adı"
-            placeholderTextColor={"#4B9D3D"}
-          />
-          <TextInput
-            style={{
-              backgroundColor: "#F4F4F4",
-              color: "#4B9D3D",
-              width: 300,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingLeft: 45,
-              paddingVertical: 5,
-              marginTop: 10,
-            }}
-            placeholder="Şifre"
-            placeholderTextColor={"#4B9D3D"}
-            secureTextEntry
-          />
-          <TextInput
-            style={{
-              backgroundColor: "#F4F4F4",
-              color: "#4B9D3D",
-              width: 300,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingLeft: 45,
-              paddingVertical: 5,
-              marginTop: 10,
-            }}
-            placeholder="Şifre Tekrar"
-            placeholderTextColor={"#4B9D3D"}
-            secureTextEntry
-          />
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#4B9D3D",
-              color: "gray",
-              width: 150,
-              height: 40,
-              borderRadius: 30,
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 15,
-              fontSize: 16,
-              paddingVertical: 5,
-              marginTop: 10,
-            }}
-          >
-            <Text style={styles.lightColorFont}>Güncelle</Text>
-          </TouchableOpacity>
-      </SafeAreaView>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "black",
-      alignItems: "center",
-      flex: 1,
-    },
-    cardView: {
-      height: cardViewHeight,
-      width: 350,
-      backgroundColor: "#282A3A",
-      borderRadius: 45,
-      justifyContent: "center",
-      margin: 30,
-      padding: 10,
-    },
-    cardView2: {
-      height: 200,
-      width: 350,
-      backgroundColor: "#282A3A",
-      borderRadius: 15,
-      justifyContent: "center",
-      margin: 20,
-      padding: 10,
-    },
-    cardImages: {
-      height: 100,
-      width: 200,
-      borderRadius: 15,
-      margin: 10,
-      padding: 10,
-      resizeMode: "stretch",
-      marginRight: -130,
-      bottom: 10,
-    },
-    clickableBtn: {
-      height: 30,
-      width: 30,
-      //backgroundColor:"gray",
-      borderRadius: 15,
-      marginTop: 20,
-      marginLeft: 0,
-      left: 140,
-    },
-    clickableImg: {
-      height: 90,
-      width: 90,
-      //backgroundColor:"purple",
-      borderRadius: 45,
-    },
-    headerFont: {
-      fontSize: 16,
-      color: "white",
-      fontWeight: "bold",
-      margin: 5,
-    },
-    lightColorFont: {
-      fontSize: 16,
-      color: "white",
-      fontWeight: "bold",
-    },
-    font: {
-      fontSize: 16,
-      color: "lightblue",
-      fontWeight: "bold",
-    },
-  });
-  
+      </View>
+
+      <View style={styles.cardView2}>
+        <CustomInput
+          label="Name"
+          value={name}
+          onChange={setName}
+          placeholder="Enter your name"
+          style={styles.input}
+        />
+        <CustomInput
+          label="Email"
+          value={email}
+          onChange={setEmail}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          style={styles.input}
+        />
+        <CustomInput
+          label="Username"
+          value={username}
+          onChange={setUsername}
+          placeholder="Enter your username"
+          style={styles.input}
+        />
+        <CustomInput
+          label="Password"
+          value={password}
+          onChange={setPassword}
+          placeholder="Enter your password"
+          secureTextEntry
+          style={styles.input}
+        />
+        <CustomInput
+          label="Confirm Password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          placeholder="Confirm your password"
+          secureTextEntry
+          style={styles.input}
+        />
+        <CustomButton
+          label="Update"
+          onPress={handleUpdate}
+          style={styles.button}
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  cardView: {
+    height: cardViewHeight,
+    width: "35%",
+    backgroundColor: "#bbb",
+    borderRadius: 20,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  clickableImg: {
+    width: "80%",
+    height: "80%",
+    borderRadius: 50,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardView2: {
+    height: "auto",
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginTop: 20,
+    padding: 20,
+  },
+  input: {
+    marginVertical: 10,
+  },
+  button: {
+    marginTop: 20,
+  },
+});

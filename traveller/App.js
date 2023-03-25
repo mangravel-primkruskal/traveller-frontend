@@ -17,14 +17,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="TabNavigator"
+      <Stack.Screen
+          name="TabNavigatorComponent"
           component={Home}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={Login}
+        initialRouteName='Login' 
+        options={({ navigation }) => ({ navigation })}
         />
          <Stack.Screen
         name="Register"
@@ -36,6 +38,7 @@ export default function App() {
             </Text>
           ),
         }}/>
+        
          <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
