@@ -13,7 +13,11 @@ import React from "react";
 // import colors from "../../constant/colors";
 const cardViewHeight = 150;
 
-export default function Profile({ navigation }) {
+export default function Profile({ navigation, route }) {
+
+  const { crowded , mood } = route.params;
+  alert(mood);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, flexDirection: "row" }}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -21,7 +21,34 @@ const demoData = [
   { test: "test" },
 ];
 
+const dummyMoodData = [
+  {
+    name: "Romantik",
+  },
+  {
+    name: "Huzur",
+  },
+  {
+    name: "Eğlence",
+  },
+];
+
+const dummyCrowdedData = [
+  {
+    state: "AZ",
+  },
+  {
+    state: "ORTA",
+  },
+  {
+    state: "ÇOK",
+  },
+];
+
 export default function Home({ navigation }) {
+  const [selectedMood, setSelectedMood] = useState(null);
+  const [selectedCrowded, setSelectedCrowded] = useState(null);
+
   return (
     <SafeAreaView
       style={{
@@ -134,45 +161,17 @@ export default function Home({ navigation }) {
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#70B962",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
-                  </View>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#70B962",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
-                  </View>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#70B962",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>ÇALIŞKAN</Text>
-                  </View>
+                  {dummyMoodData.map((item) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.selectionCard,
+                        { borderWidth: selectedMood === item.name ? 1 : 0 },
+                      ]}
+                      onPress={() => setSelectedMood(item.name)}
+                    >
+                      <Text style={{ color: "white" }}>{item.name}</Text>
+                    </TouchableOpacity>
+                  ))}
                 </View>
               </View>
 
@@ -196,45 +195,20 @@ export default function Home({ navigation }) {
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#F28888",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>AZ</Text>
-                  </View>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#DE4343",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>ORTA</Text>
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      height: 60,
-                      width: 100,
-                      backgroundColor: "#E30505",
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>ÇOK</Text>
-                  </TouchableOpacity>
+                  {dummyCrowdedData.map((item) => (
+                    <TouchableOpacity
+                      onPress={() => setSelectedCrowded(item.state)}
+                      style={[
+                        styles.selectionCard,
+                        {
+                          backgroundColor: "red",
+                          borderWidth: selectedCrowded === item.state ? 1 : 0,
+                        },
+                      ]}
+                    >
+                      <Text style={{ color: "white" }}>{item.state}</Text>
+                    </TouchableOpacity>
+                  ))}
                 </View>
               </View>
               <View>
@@ -276,6 +250,12 @@ export default function Home({ navigation }) {
                   </View>
 
                   <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("Profile", {
+                        mood: selectedMood,
+                        crowded: selectedCrowded,
+                      })
+                    }
                     style={{
                       height: 70,
                       width: 70,
@@ -331,5 +311,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 20,
+  },
+  selectionCard: {
+    height: 60,
+    width: 100,
+    backgroundColor: "#70B962",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
   },
 });

@@ -8,6 +8,7 @@ import Home from '../../page/home';
 import Maps from '../../page/maps';
 import CustomTabBar from '../CustomTabBar';
 import Logout from '../../page/logout';
+import Profile from '../../page/profile'
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default function TabNavigatorComponent() {
         }}
         component={Home}
       />
-      <Tab.Screen name="Profil" component={Maps} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
