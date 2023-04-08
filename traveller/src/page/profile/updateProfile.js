@@ -9,8 +9,8 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import CustomInput from "./CustomInput";
-import CustomButton from "./CustomButton";
+import CustomInput from "../../component/CustomInput";
+import CustomButton from "../../component/CustomButton";
 
 const cardViewHeight = 150;
 

@@ -10,6 +10,7 @@ import Login from "./src/page/login";
 import Register from "./src/page/register";
 import ForgotPassword from "./src/page/forgotPassword";
 import GoogleMaps from "./src/page/maps/googleMaps";
+import UpdateProfile from "./src/page/profile/updateProfile";
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,11 @@ export default function App() {
         name="GoogleMaps"
         component={GoogleMaps}
         options={{ headerShown: false }}
+        />
+         <Stack.Screen
+        name="UpdateProfile"
+        component={UpdateProfile}
+        options={{ headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>
