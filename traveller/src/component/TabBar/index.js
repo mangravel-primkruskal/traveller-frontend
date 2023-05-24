@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from '../../page/home';
+import Home1 from '../../page/home';
 import Maps from '../../page/maps';
 import CustomTabBar from '../CustomTabBar';
 import Logout from '../../page/logout';
@@ -38,7 +38,7 @@ export default function TabNavigatorComponent() {
             backgroundColor: '#3D7734',
           },
         }}
-        component={Home}
+        component={Home1}
       />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

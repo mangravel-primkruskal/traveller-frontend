@@ -7,14 +7,48 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import CustomButton from "../../component/CustomButton";
 import CustomInput from "../../component/CustomInput";
-
+import axios from "axios";
 import logo from "../../assets/themeShapes/circle.png";
 const cardViewHeight = 150;
 
 export default function Register({ navigation }) {
+  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
+  const [full_name, setfull_name] = useState("");
+  const [password, setpassword] = useState("");
+
+  const clickToRegister = () => {
+    let data = JSON.stringify({
+      full_name: full_name,
+      username: username,
+      email: email,
+      password: password,
+      confirm_password: password,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://travellerbackend.herokuapp.com/register",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        alert(response?.data?.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -29,39 +63,43 @@ export default function Register({ navigation }) {
       >
         <Image
           source={logo}
-          style={{ width: 250, height: 250, resizeMode: "stretch", marginVertical: 10 }}
+          style={{
+            width: 250,
+            height: 250,
+            resizeMode: "stretch",
+            marginVertical: 10,
+          }}
         />
         <CustomInput
           placeholder="Ad Soyad"
           iconName="user"
+          value={full_name}
           iconType="font-awesome"
+          onChangeText={(text) => setfull_name(text)}
         />
         <CustomInput
           placeholder="E-posta"
           iconName="envelope"
+          value={email}
           iconType="font-awesome"
+          onChangeText={(text) => setemail(text)}
         />
         <CustomInput
           placeholder="Kullanıcı Adı"
           iconName="user"
+          value={username}
           iconType="font-awesome"
+          onChangeText={(text) => setUsername(text)}
         />
         <CustomInput
           placeholder="Şifre"
           iconName="lock"
           iconType="font-awesome"
+          value={password}
+          onChangeText={(text) => setpassword(text)}
           secureTextEntry
         />
-        <CustomInput
-          placeholder="Şifre Tekrar"
-          iconName="lock"
-          iconType="font-awesome"
-          secureTextEntry
-        />
-        <CustomButton
-          title="Kayıt Ol"
-          onPress={() => console.log("Register button pressed")}
-        />
+        <CustomButton title="Kayıt Ol" onPress={() => clickToRegister()} />
       </View>
     </SafeAreaView>
   );

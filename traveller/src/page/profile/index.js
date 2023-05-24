@@ -49,7 +49,7 @@ export default function Profile({ navigation, route }) {
                 >
                   <View
                     style={{
-                      backgroundColor: "orange",
+                      backgroundColor: "lightgray",
                       width: 80,
                       height: 80,
                       borderRadius: 40,
