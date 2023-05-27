@@ -54,6 +54,8 @@ export default function Profile({ navigation, route }) {
                       height: 80,
                       borderRadius: 40,
                       alignItems: "center",
+                      justifyContent: "center",
+                      
                     }}
                   >
                     <AntDesign name="user" size={55} color="green" />
@@ -88,6 +90,7 @@ export default function Profile({ navigation, route }) {
                           borderRadius: 15,
                           padding: 3,
                           alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
                         <Text style={{ color: "white" }}>Takip Et</Text>
@@ -96,11 +99,11 @@ export default function Profile({ navigation, route }) {
 
                     <View style={{ flex: 1 }}>
                       <TouchableOpacity
-                      // tıklanınca profil düzenleme açılır
-                      onPress={(event) => {
-                        console.log("testtt",event)
-                        navigation.navigate(UpdateProfile);
-                      }}
+                        // tıklanınca profil düzenleme açılır
+                        onPress={(event) => {
+                          console.log("testtt", event);
+                          navigation.navigate(UpdateProfile);
+                        }}
                         style={{
                           backgroundColor: "gray",
                           width: 30,

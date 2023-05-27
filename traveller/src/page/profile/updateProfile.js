@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import CustomInput from "../../component/CustomInput";
 import CustomButton from "../../component/CustomButton";
+import { AntDesign } from "@expo/vector-icons";
 
 const cardViewHeight = 150;
 
@@ -32,26 +33,40 @@ export default function UpdateProfile({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={styles.cardView}>
-          <View style={styles.clickableImg}>
-            {/* <Image source={uri} style={styles.clickableImg}></Image> */}
-          </View>
-        </View>
-      </View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: "lightgray",
+            width: 80,
+            height: 80,
+            borderRadius: 40,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <AntDesign name="user" size={55} color="green" />
 
+          {/* örnek olması için eklendi, user image gerekli  */}
+        </View>
+        <Text style={{ marginTop: 10 }}>Change Photo</Text>
+      </View>
       <View style={styles.cardView2}>
         <CustomInput
           label="Name"
           value={name}
-          onChange={setName}
+          onChangeText={(text) => setName(text)}
           placeholder="Enter your name"
           style={styles.input}
         />
         <CustomInput
           label="Email"
           value={email}
-          onChange={setEmail}
+          onChangeText={(text) => setEmail(text)}
           placeholder="Enter your email"
           keyboardType="email-address"
           style={styles.input}
@@ -59,14 +74,14 @@ export default function UpdateProfile({ navigation }) {
         <CustomInput
           label="Username"
           value={username}
-          onChange={setUsername}
+          onChangeText={(text) => setUsername(text)}
           placeholder="Enter your username"
           style={styles.input}
         />
         <CustomInput
           label="Password"
           value={password}
-          onChange={setPassword}
+          onChangeText={(text) => setPassword(text)}
           placeholder="Enter your password"
           secureTextEntry
           style={styles.input}
@@ -74,16 +89,14 @@ export default function UpdateProfile({ navigation }) {
         <CustomInput
           label="Confirm Password"
           value={confirmPassword}
-          onChange={setConfirmPassword}
+          onChangeText={(text) => setConfirmPassword(text)}
           placeholder="Confirm your password"
           secureTextEntry
           style={styles.input}
         />
-        <CustomButton
-          label="Update"
-          onPress={handleUpdate}
-          style={styles.button}
-        />
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <CustomButton title="Update Profile" />
+        </View>
       </View>
     </SafeAreaView>
   );
