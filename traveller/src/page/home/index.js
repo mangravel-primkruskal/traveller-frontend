@@ -21,33 +21,39 @@ const demoData = [
   { test: "test" },
 ];
 
-const dummyMoodData = [
+const dummyOutdoorTypeData = [
   {
-    name: "Romantik",
+    name: "Kahve",
   },
   {
-    name: "Huzur",
+    name: "Restoran",
   },
   {
-    name: "Eğlence",
+    name: "Market",
+  },
+  {
+    name: "Müze",
+  },
+  {
+    name: "Park",
   },
 ];
 
-const dummyCrowdedData = [
+const dummyRadiusData = [
   {
-    state: "AZ",
+    state: "Yakın",
   },
   {
-    state: "ORTA",
+    state: "Orta",
   },
   {
-    state: "ÇOK",
+    state: "Uzak",
   },
 ];
 
 export default function Home({ navigation }) {
-  const [selectedMood, setSelectedMood] = useState(null);
-  const [selectedCrowded, setSelectedCrowded] = useState(null);
+  const [selectedOutdoorType, setSelectedOutdoorType] = useState(null);
+  const [selectedRadius, setSelectedRadius] = useState(null);
 
   return (
     <SafeAreaView
@@ -148,6 +154,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
+                    paddingHorizontal:40
                   }}
                 >
                   <Text
@@ -155,23 +162,27 @@ export default function Home({ navigation }) {
                       fontSize: 18,
                       fontWeight: "700",
                       color: "#4B9D3D",
+
                     }}
                   >
-                    Moduma Göre
+                    Mekan Türü
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  {dummyMoodData.map((item) => (
+                  <ScrollView horizontal={true} style={{ marginHorizontal:10 }}>
+                  {dummyOutdoorTypeData.map((item) => (
                     <TouchableOpacity
                       style={[
                         styles.selectionCard,
-                        { borderWidth: selectedMood === item.name ? 1 : 0 },
+                        { borderWidth: selectedOutdoorType === item.name ? 1 : 0 },
                       ]}
-                      onPress={() => setSelectedMood(item.name)}
+                      onPress={() => setSelectedOutdoorType(item.name)}
                     >
                       <Text style={{ color: "white" }}>{item.name}</Text>
                     </TouchableOpacity>
                   ))}
+                  </ScrollView>
+                  
                 </View>
               </View>
 
@@ -182,6 +193,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
+                    paddingHorizontal:20
                   }}
                 >
                   <Text
@@ -191,18 +203,18 @@ export default function Home({ navigation }) {
                       color: "#4B9D3D",
                     }}
                   >
-                    Kalabalıklık Durumu
+                    Uzaklık
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  {dummyCrowdedData.map((item) => (
+                  {dummyRadiusData.map((item) => (
                     <TouchableOpacity
-                      onPress={() => setSelectedCrowded(item.state)}
+                      onPress={() => setSelectedRadius(item.state)}
                       style={[
                         styles.selectionCard,
                         {
                           backgroundColor: "red",
-                          borderWidth: selectedCrowded === item.state ? 1 : 0,
+                          borderWidth: selectedRadius === item.state ? 1 : 0,
                         },
                       ]}
                     >
@@ -252,8 +264,8 @@ export default function Home({ navigation }) {
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate("Profile", {
-                        mood: selectedMood,
-                        crowded: selectedCrowded,
+                        outdoorType: selectedOutdoorType,
+                        radius: selectedRadius,
                       })
                     }
                     style={{
