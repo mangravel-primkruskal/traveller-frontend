@@ -53,21 +53,21 @@ export default function UpdateProfile({ navigation }) {
 
           {/* örnek olması için eklendi, user image gerekli  */}
         </View>
-        <Text style={{ marginTop: 10 }}>Change Photo</Text>
+        <Text style={{ marginTop: 10 }}>Fotoğrafı Değiştir</Text>
       </View>
       <View style={styles.cardView2}>
         <CustomInput
           label="Name"
           value={name}
           onChangeText={(text) => setName(text)}
-          placeholder="Enter your name"
+          placeholder="İsminizi giriniz"
           style={styles.input}
         />
         <CustomInput
           label="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
-          placeholder="Enter your email"
+          placeholder="Email adresinizi giriniz"
           keyboardType="email-address"
           style={styles.input}
         />
@@ -75,14 +75,14 @@ export default function UpdateProfile({ navigation }) {
           label="Username"
           value={username}
           onChangeText={(text) => setUsername(text)}
-          placeholder="Enter your username"
+          placeholder="Kullanıcı adı giriniz"
           style={styles.input}
         />
         <CustomInput
           label="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          placeholder="Enter your password"
+          placeholder="Şifrenizi giriniz"
           secureTextEntry
           style={styles.input}
         />
@@ -90,12 +90,12 @@ export default function UpdateProfile({ navigation }) {
           label="Confirm Password"
           value={confirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}
-          placeholder="Confirm your password"
+          placeholder="Şifrenizi tekrar giriniz"
           secureTextEntry
           style={styles.input}
         />
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <CustomButton title="Update Profile" />
+          <CustomButton title="Profili Güncelle" />
         </View>
       </View>
     </SafeAreaView>

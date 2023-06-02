@@ -18,47 +18,46 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          initialRouteName='Login'
+          options={({ navigation }) => ({ navigation })}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{
+            headerTitle: () => (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Kayıt Ol
+              </Text>
+            ),
+          }} />
+        <Stack.Screen
           name="TabNavigatorComponent"
           component={Home}
           options={{ headerShown: false }}
         />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        initialRouteName='Login' 
-        options={({ navigation }) => ({ navigation })}
-        />
-         <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{
-          headerTitle: () => (
-            <Text style={{ fontSize: 20, fontWeight: "bold"}}>
-              Kayıt Ol
-            </Text>
-          ),
-        }}/>
-        
-         <Stack.Screen
-        name="ForgotPassword"
-        component={ForgotPassword}
-        options={{
-          headerTitle: () => (
-            <Text style={{ fontSize: 20, fontWeight: "bold"}}>
-              Şifremi Unuttum
-            </Text>
-          ),
-        }}/>
         <Stack.Screen
-        name="GoogleMaps"
-        component={GoogleMaps}
-        options={{ headerShown: false }}
+          name="ForgotPassword"
+          component={ForgotPassword}
+          options={{
+            headerTitle: () => (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Şifremi Unuttum
+              </Text>
+            ),
+          }} />
+        <Stack.Screen
+          name="GoogleMaps"
+          component={GoogleMaps}
+          options={{ headerShown: false }}
         />
-         <Stack.Screen
-        name="UpdateProfile"
-        component={UpdateProfile}
-        options={{ headerShown: true }}
+        <Stack.Screen
+          name="UpdateProfile"
+          component={UpdateProfile}
+          options={{ headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>

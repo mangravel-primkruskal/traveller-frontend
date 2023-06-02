@@ -12,6 +12,8 @@ import CustomButton from "../../component/CustomButton";
 import CustomInput from "../../component/CustomInput";
 import axios from "axios";
 import logo from "../../assets/themeShapes/circle.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const cardViewHeight = 150;
 
 export default function Register({ navigation }) {
@@ -42,7 +44,15 @@ export default function Register({ navigation }) {
     axios
       .request(config)
       .then((response) => {
-        alert(response?.data?.message);
+        if (response?.data?.message === "Kullanıcı başarıyla kaydedildi") {
+          AsyncStorage.setItem("user", data).then(() => {
+            navigation.navigate("TabNavigatorComponent")
+          })
+        }
+        else {
+          alert(response?.data?.message)
+        }
+
       })
       .catch((error) => {
         console.log(error);

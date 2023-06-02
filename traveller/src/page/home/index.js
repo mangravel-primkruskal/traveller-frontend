@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -9,8 +9,13 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Share
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
+import CustomInput from "../../component/CustomInput";
+import CustomButton from "../../component/CustomButton";
+import axios from "axios";
 
 const demoData = [
   { test: "test" },
@@ -42,18 +47,85 @@ const dummyOutdoorTypeData = [
 const dummyRadiusData = [
   {
     state: "Yakın",
+    value: 1000
   },
   {
     state: "Orta",
+    value: 2000
   },
   {
     state: "Uzak",
+    value: 3000
   },
 ];
 
 export default function Home({ navigation }) {
   const [selectedOutdoorType, setSelectedOutdoorType] = useState(null);
   const [selectedRadius, setSelectedRadius] = useState(null);
+  const [user, setUser] = useState([{ username: "" }]);
+  const [country, setCountry] = useState("Turkey");
+  const [city, setCity] = useState("Ankara");
+  const [county, setCounty] = useState("Eryaman");
+  const [zipCode, setZipCode] = useState("06824");
+
+
+  useEffect(() => {
+
+    AsyncStorage.getItem("user").then((data) => {
+      setUser(JSON.parse(data));
+    })
+
+  }, [])
+
+
+  const onShare = async () => {
+
+    const result = await Share.share({
+      message:
+        'Bu uygulamayı mutlaka kullanmalısınız.',
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+
+  };
+
+  const searchData = () => {
+    let data = JSON.stringify({
+      keyword: selectedOutdoorType,
+      radius: dummyRadiusData.filter(text => text.state === selectedRadius)[0].value,
+      country: country,
+      city: city,
+      county: county,
+      zip_code: zipCode
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://travellerbackend.herokuapp.com/contentrecyeni',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        navigation.navigate("Arama Sonuçları", { data: response.data })
+        console.log(response.data);
+      })
+      .catch((error) => {
+        alert(error)
+      });
+
+  }
 
   return (
     <SafeAreaView
@@ -84,7 +156,7 @@ export default function Home({ navigation }) {
                     Gittiğiniz Yeri Ekleyin
                   </Text>
                   <Text style={{ color: "#4B9D3D" }}>
-                    Detayları ve arkadaşlarınızı eklemeyi unutmayın
+                    Merhaba <Text style={{ fontWeight: 'bold', color: '#F95656' }} >{user?.username}</Text>, Detayları ve arkadaşlarınızı eklemeyi unutmayın
                   </Text>
                 </View>
                 <View
@@ -96,7 +168,7 @@ export default function Home({ navigation }) {
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.navigate(Login);
+                      navigation.navigate("Yeni Gönderi");
                     }}
                   >
                     <AntDesign name="pluscircle" size={44} color="#F95656" />
@@ -154,7 +226,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal:40
+                    paddingHorizontal: 40
                   }}
                 >
                   <Text
@@ -169,20 +241,20 @@ export default function Home({ navigation }) {
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <ScrollView horizontal={true} style={{ marginHorizontal:10 }}>
-                  {dummyOutdoorTypeData.map((item) => (
-                    <TouchableOpacity
-                      style={[
-                        styles.selectionCard,
-                        { borderWidth: selectedOutdoorType === item.name ? 1 : 0 },
-                      ]}
-                      onPress={() => setSelectedOutdoorType(item.name)}
-                    >
-                      <Text style={{ color: "white" }}>{item.name}</Text>
-                    </TouchableOpacity>
-                  ))}
+                  <ScrollView horizontal={true} style={{ marginHorizontal: 10 }}>
+                    {dummyOutdoorTypeData.map((item) => (
+                      <TouchableOpacity
+                        style={[
+                          styles.selectionCard,
+                          { borderWidth: selectedOutdoorType === item.name ? 1 : 0 },
+                        ]}
+                        onPress={() => setSelectedOutdoorType(item.name)}
+                      >
+                        <Text style={{ color: "white" }}>{item.name}</Text>
+                      </TouchableOpacity>
+                    ))}
                   </ScrollView>
-                  
+
                 </View>
               </View>
 
@@ -193,7 +265,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal:20
+                    paddingHorizontal: 20
                   }}
                 >
                   <Text
@@ -207,29 +279,47 @@ export default function Home({ navigation }) {
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  {dummyRadiusData.map((item) => (
-                    <TouchableOpacity
-                      onPress={() => setSelectedRadius(item.state)}
-                      style={[
-                        styles.selectionCard,
-                        {
-                          backgroundColor: "red",
-                          borderWidth: selectedRadius === item.state ? 1 : 0,
-                        },
-                      ]}
-                    >
-                      <Text style={{ color: "white" }}>{item.state}</Text>
-                    </TouchableOpacity>
-                  ))}
+                  <ScrollView horizontal={true}>
+                    {dummyRadiusData.map((item) => (
+                      <TouchableOpacity
+                        onPress={() => setSelectedRadius(item.state)}
+                        style={[
+                          styles.selectionCard,
+                          {
+                            backgroundColor: "red",
+                            borderWidth: selectedRadius === item.state ? 1 : 0,
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "white" }}>{item.state}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
                 </View>
+                {
+                  (selectedOutdoorType !== null && selectedRadius !== null) ?
+                    <View style={{ paddingVertical: 20 }} >
+                      <CustomInput value={country} onChangeText={(text) => setCountry(text)} placeholder="Ülke Giriniz" />
+                      <CustomInput value={city} onChangeText={(text) => setCity(text)} placeholder="Şehir Giriniz" />
+                      <CustomInput value={county} onChangeText={(text) => setCounty(text)} placeholder="İlçe Giriniz" />
+                      <CustomInput value={zipCode} onChangeText={(text) => setZipCode(text)} placeholder="Posta Kodu Giriniz" />
+                      <View style={{ alignItems: 'center' }} >
+                        <CustomButton title="Ara" onPress={() => searchData()} />
+                      </View>
+                    </View> : null
+                }
+
               </View>
+
               <View>
-                <View
+                <TouchableOpacity
+                  onPress={() => onShare()}
                   style={{
                     marginTop: 30,
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
+                    paddingHorizontal: 20
                   }}
                 >
                   <Text
@@ -241,44 +331,7 @@ export default function Home({ navigation }) {
                   >
                     Arkadaşlarınla Paylaş
                   </Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <View
-                    style={{
-                      height: 60,
-                      width: 220,
-                      borderRadius: 20,
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "#4B9D3D",
-                      }}
-                    >
-                      Sizi takip eden ... kişi
-                    </Text>
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("Profile", {
-                        outdoorType: selectedOutdoorType,
-                        radius: selectedRadius,
-                      })
-                    }
-                    style={{
-                      height: 70,
-                      width: 70,
-                      backgroundColor: "lightgray",
-                      borderRadius: 35,
-                      marginRight: 20,
-                    }}
-                  >
-                    <Text>test</Text>
-                  </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

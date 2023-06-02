@@ -9,6 +9,9 @@ import Maps from '../../page/maps';
 import CustomTabBar from '../CustomTabBar';
 import Logout from '../../page/logout';
 import Profile from '../../page/profile'
+import AddContent from '../../page/addContent';
+import UpdateProfile from '../../page/profile/updateProfile';
+import SearchList from '../../page/searchList';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +43,10 @@ export default function TabNavigatorComponent() {
         }}
         component={Home1}
       />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profil" component={Profile} />
+      <Tab.Screen name="Yeni Gönderi" component={AddContent} />
+      <Tab.Screen name="Profili Güncelle" component={UpdateProfile} />
+      <Tab.Screen name="Arama Sonuçları" component={SearchList} />
     </Tab.Navigator>
   );
 }

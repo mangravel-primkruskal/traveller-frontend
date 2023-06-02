@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import colors from "../../constant/colors";
 
-import { AntDesign } from "@expo/vector-icons";
-import UpdateProfile from "./updateProfile";
+import { AntDesign } from "@expo/vector-icons"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const cardViewHeight = 150;
 const demoData = [
@@ -26,6 +26,17 @@ const demoData = [
 ];
 
 export default function Profile({ navigation, route }) {
+
+  const [user, setUser] = useState([{ username: "" }])
+
+
+  useEffect(() => {
+    AsyncStorage.getItem("user").then((data) => {
+      setUser(JSON.parse(data))
+    })
+  }, [])
+
+
   return (
     <SafeAreaView
       style={{
@@ -55,7 +66,7 @@ export default function Profile({ navigation, route }) {
                       borderRadius: 40,
                       alignItems: "center",
                       justifyContent: "center",
-                      
+
                     }}
                   >
                     <AntDesign name="user" size={55} color="green" />
@@ -75,7 +86,7 @@ export default function Profile({ navigation, route }) {
                       color: "#4B9D3D",
                     }}
                   >
-                    Bülent Ersoy
+                    {user?.username}
                   </Text>
 
                   <Text style={{ color: "#4B9D3D" }}>Şarkıcı</Text>
@@ -102,7 +113,7 @@ export default function Profile({ navigation, route }) {
                         // tıklanınca profil düzenleme açılır
                         onPress={(event) => {
                           console.log("testtt", event);
-                          navigation.navigate(UpdateProfile);
+                          navigation.navigate("Profili Güncelle");
                         }}
                         style={{
                           backgroundColor: "gray",
@@ -110,6 +121,7 @@ export default function Profile({ navigation, route }) {
                           height: 30,
                           borderRadius: 15,
                           alignItems: "center",
+                          justifyContent: 'center'
                         }}
                       >
                         <AntDesign name="setting" size={28} color="white" />
@@ -127,8 +139,8 @@ export default function Profile({ navigation, route }) {
                   width: "80%",
                   backgroundColor: "#EFEFEF",
                   borderRadius: 19,
-                  padding: 20,
-                  margin: 5,
+                  padding: 10,
+                  marginTop: 10
                 }}
               >
                 <View
@@ -139,6 +151,8 @@ export default function Profile({ navigation, route }) {
                     marginRight: 10,
                     flex: 1,
                     flexDirection: "column",
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <Text
@@ -168,6 +182,8 @@ export default function Profile({ navigation, route }) {
                     marginRight: 10,
                     flex: 1,
                     flexDirection: "column",
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <Text
@@ -196,6 +212,8 @@ export default function Profile({ navigation, route }) {
                     marginRight: 10,
                     flex: 1,
                     flexDirection: "column",
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <Text
@@ -216,34 +234,6 @@ export default function Profile({ navigation, route }) {
                     Gönderi
                   </Text>
                 </View>
-                <View
-                  style={{
-                    height: 60,
-                    width: 220,
-                    borderRadius: 20,
-                    marginRight: 10,
-                    flex: 1,
-                    flexDirection: "column",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: "black",
-                      fontWeight: "900",
-                    }}
-                  >
-                    45
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: "black",
-                    }}
-                  >
-                    Favoriler
-                  </Text>
-                </View>
               </View>
 
               {/* Favoriler */}
@@ -258,7 +248,7 @@ export default function Profile({ navigation, route }) {
                 <Text
                   style={{ fontSize: 18, fontWeight: "700", color: "#4B9D3D" }}
                 >
-                  Favori Mekanlar
+                  Favori Mekanlar {"(45)"}
                 </Text>
               </View>
 

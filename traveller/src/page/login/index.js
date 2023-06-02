@@ -14,6 +14,8 @@ import CustomButton from "../../component/CustomButton";
 import logo from "../../assets/themeShapes/circle.png";
 import Register from "../register";
 import ForgotPassword from "../forgotPassword";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const cardViewHeight = 150;
 
 export default function Login({ navigation }) {
@@ -21,13 +23,41 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // burada login işlemlerini gerçekleştirin
-    console.log("Login clicked with username:", username, "password:", password);
-    if (username == "test") {
-      navigation.navigate("TabNavigatorComponent");
-    }
+    let data = JSON.stringify({
+      username,
+      password
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://travellerbackend.herokuapp.com/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        if (response?.data?.message === "Login basarili") {
+          AsyncStorage.setItem("user", data).then(() => {
+            navigation.navigate("TabNavigatorComponent")
+          })
+        }
+        else {
+          alert(response?.data?.message)
+          navigation.navigate("TabNavigatorComponent")
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+
   };
-  
+
 
   return (
     <SafeAreaView style={styles.container}>

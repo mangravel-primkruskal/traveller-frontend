@@ -48,6 +48,9 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
             });
           };
 
+          if(label !== "Yeni Gönderi")
+          if(label !== "Profili Güncelle")
+          if(label !== "Arama Sonuçları")
           return (
             <TouchableOpacity
               accessibilityRole="button"
