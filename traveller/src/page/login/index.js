@@ -20,18 +20,20 @@ const cardViewHeight = 150;
 
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("irem");
-  const [password, setPassword] = useState("123456789");
+  const [password, setPassword] = useState("1234567899");
 
   const handleLogin = () => {
+    console.log("hey")
     let data = JSON.stringify({
-      username,
-      password,
+      username:username,
+      password:password,
     });
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/login",
+      //url: "http://1010.0.2.2:5000/login",
+      url: "https://travellerbackend.herokuapp.com/login",
       headers: {
         "Content-Type": "application/json",
       },
@@ -78,7 +80,7 @@ export default function Login({ navigation }) {
           secureTextEntry={true}
         />
 
-        <CustomButton title="Giriş" onPress={handleLogin} />
+        <CustomButton title="Giriş" onPress={()=>handleLogin()} />
 
         <TouchableOpacity
           style={styles.forgotPasswordButton}

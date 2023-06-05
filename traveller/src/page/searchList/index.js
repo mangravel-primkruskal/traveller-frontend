@@ -32,6 +32,10 @@ export default function SearchList({ navigation, route }) {
     },
   ];
 
+  useEffect(() => {
+   data=props.data;
+  }, []);
+
   return (
     <SafeAreaView
       style={{

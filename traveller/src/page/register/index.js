@@ -7,6 +7,7 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
+
 } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "../../component/CustomButton";
@@ -41,7 +42,7 @@ export default function Register({ navigation }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:5000/register",
+      url: "http://10.0.2.2:5000/register",
       headers: {
         "Content-Type": "application/json",
       },
@@ -52,7 +53,7 @@ export default function Register({ navigation }) {
       .request(config)
       .then((response) => {
         if (response?.data?.message === "Kullanıcı başarıyla kaydedildi") {
-          alert("Backend response ", response?.data?.message);
+          alert("Kayıt Başarılı", response?.data?.message);
           AsyncStorage.setItem("user", data).then(() => {
             navigation.navigate("TabNavigatorComponent");
           });
@@ -98,18 +99,18 @@ export default function Register({ navigation }) {
               onChangeText={(text) => setfull_name(text)}
             />
             <CustomInput
-              placeholder="Telefon Numarası"
-              iconName="phone"
-              value={phone}
-              iconType="font-awesome"
-              onChangeText={(text) => setphone(text)}
-            />
-            <CustomInput
               placeholder="E-posta"
               iconName="envelope"
               value={email}
               iconType="font-awesome"
               onChangeText={(text) => setemail(text)}
+            />
+             <CustomInput
+              placeholder="Telefon Numarası"
+              iconName="phone"
+              value={phone}
+              iconType="font-awesome"
+              onChangeText={(text) => setphone(text)}
             />
             <CustomInput
               placeholder="Şehir"

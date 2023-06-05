@@ -104,13 +104,15 @@ export default function Home({ navigation }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/contentrecyeni",
+      //url: "http://127.0.0.1:5000/contentrecyeni",
+      url: "http://travellerbackend.herokuapp.com/contentrecyeni",
       headers: {
         "Content-Type": "application/json",
       },
       data: data,
     };
 
+    console.log("config arama sayfası",conf)
     axios
       .request(config)
       .then((response) => {
