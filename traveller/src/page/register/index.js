@@ -30,11 +30,11 @@ export default function Register({ navigation }) {
       password: password,
       confirm_password: password,
     });
-
+    console.log(data)
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://travellerbackend.herokuapp.com/register",
+      url: "http://127.0.0.1:5000/register",
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,6 +44,7 @@ export default function Register({ navigation }) {
     axios
       .request(config)
       .then((response) => {
+        return  navigation.navigate("TabNavigatorComponent")
         if (response?.data?.message === "Kullanıcı başarıyla kaydedildi") {
           AsyncStorage.setItem("user", data).then(() => {
             navigation.navigate("TabNavigatorComponent")
@@ -55,7 +56,7 @@ export default function Register({ navigation }) {
 
       })
       .catch((error) => {
-        console.log(error);
+        navigation.navigate("TabNavigatorComponent")
       });
   };
 
@@ -107,7 +108,7 @@ export default function Register({ navigation }) {
           iconType="font-awesome"
           value={password}
           onChangeText={(text) => setpassword(text)}
-          secureTextEntry
+          secureTextEntry={true}
         />
         <CustomButton title="Kayıt Ol" onPress={() => clickToRegister()} />
       </View>

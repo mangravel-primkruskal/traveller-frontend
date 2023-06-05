@@ -19,7 +19,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
+          name="Giriş"
           component={Login}
           initialRouteName='Login'
           options={({ navigation }) => ({ navigation })}

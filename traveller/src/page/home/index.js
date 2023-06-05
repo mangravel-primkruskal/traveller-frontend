@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Share
+  Share,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
@@ -47,15 +47,15 @@ const dummyOutdoorTypeData = [
 const dummyRadiusData = [
   {
     state: "Yakın",
-    value: 1000
+    value: 1000,
   },
   {
     state: "Orta",
-    value: 2000
+    value: 2000,
   },
   {
     state: "Uzak",
-    value: 3000
+    value: 3000,
   },
 ];
 
@@ -68,21 +68,15 @@ export default function Home({ navigation }) {
   const [county, setCounty] = useState("Eryaman");
   const [zipCode, setZipCode] = useState("06824");
 
-
   useEffect(() => {
-
     AsyncStorage.getItem("user").then((data) => {
       setUser(JSON.parse(data));
-    })
-
-  }, [])
-
+    });
+  }, []);
 
   const onShare = async () => {
-
     const result = await Share.share({
-      message:
-        'Bu uygulamayı mutlaka kullanmalısınız.',
+      message: "Bu uygulamayı mutlaka kullanmalısınız.",
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -93,39 +87,40 @@ export default function Home({ navigation }) {
     } else if (result.action === Share.dismissedAction) {
       // dismissed
     }
-
   };
 
   const searchData = () => {
+    return navigation.navigate("Arama Sonuçları");
     let data = JSON.stringify({
       keyword: selectedOutdoorType,
-      radius: dummyRadiusData.filter(text => text.state === selectedRadius)[0].value,
+      radius: dummyRadiusData.filter((text) => text.state === selectedRadius)[0]
+        .value,
       country: country,
       city: city,
       county: county,
-      zip_code: zipCode
+      zip_code: zipCode,
     });
 
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
-      url: 'https://travellerbackend.herokuapp.com/contentrecyeni',
+      url: "http://127.0.0.1:5000/contentrecyeni",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
-        navigation.navigate("Arama Sonuçları", { data: response.data })
+        navigation.navigate("Arama Sonuçları", { data: response.data });
         console.log(response.data);
       })
       .catch((error) => {
-        alert(error)
+        alert(error);
       });
-
-  }
+  };
 
   return (
     <SafeAreaView
@@ -156,7 +151,11 @@ export default function Home({ navigation }) {
                     Gittiğiniz Yeri Ekleyin
                   </Text>
                   <Text style={{ color: "#4B9D3D" }}>
-                    Merhaba <Text style={{ fontWeight: 'bold', color: '#F95656' }} >{user?.username}</Text>, Detayları ve arkadaşlarınızı eklemeyi unutmayın
+                    Merhaba{" "}
+                    <Text style={{ fontWeight: "bold", color: "#F95656" }}>
+                      {user?.username}
+                    </Text>
+                    , Detayları ve arkadaşlarınızı eklemeyi unutmayın
                   </Text>
                 </View>
                 <View
@@ -226,7 +225,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal: 40
+                    paddingHorizontal: 40,
                   }}
                 >
                   <Text
@@ -234,19 +233,24 @@ export default function Home({ navigation }) {
                       fontSize: 18,
                       fontWeight: "700",
                       color: "#4B9D3D",
-
                     }}
                   >
                     Mekan Türü
                   </Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <ScrollView horizontal={true} style={{ marginHorizontal: 10 }}>
+                  <ScrollView
+                    horizontal={true}
+                    style={{ marginHorizontal: 10 }}
+                  >
                     {dummyOutdoorTypeData.map((item) => (
                       <TouchableOpacity
                         style={[
                           styles.selectionCard,
-                          { borderWidth: selectedOutdoorType === item.name ? 1 : 0 },
+                          {
+                            borderWidth:
+                              selectedOutdoorType === item.name ? 1 : 0,
+                          },
                         ]}
                         onPress={() => setSelectedOutdoorType(item.name)}
                       >
@@ -254,7 +258,6 @@ export default function Home({ navigation }) {
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
-
                 </View>
               </View>
 
@@ -265,7 +268,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal: 20
+                    paddingHorizontal: 20,
                   }}
                 >
                   <Text
@@ -296,19 +299,33 @@ export default function Home({ navigation }) {
                     ))}
                   </ScrollView>
                 </View>
-                {
-                  (selectedOutdoorType !== null && selectedRadius !== null) ?
-                    <View style={{ paddingVertical: 20 }} >
-                      <CustomInput value={country} onChangeText={(text) => setCountry(text)} placeholder="Ülke Giriniz" />
-                      <CustomInput value={city} onChangeText={(text) => setCity(text)} placeholder="Şehir Giriniz" />
-                      <CustomInput value={county} onChangeText={(text) => setCounty(text)} placeholder="İlçe Giriniz" />
-                      <CustomInput value={zipCode} onChangeText={(text) => setZipCode(text)} placeholder="Posta Kodu Giriniz" />
-                      <View style={{ alignItems: 'center' }} >
-                        <CustomButton title="Ara" onPress={() => searchData()} />
-                      </View>
-                    </View> : null
-                }
-
+                {selectedOutdoorType !== null && selectedRadius !== null ? (
+                  <View style={{ paddingVertical: 20 }}>
+                    <CustomInput
+                      value={country}
+                      onChangeText={(text) => setCountry(text)}
+                      placeholder="Ülke Giriniz"
+                    />
+                    <CustomInput
+                      value={city}
+                      onChangeText={(text) => setCity(text)}
+                      placeholder="Şehir Giriniz"
+                    />
+                    <CustomInput
+                      value={county}
+                      onChangeText={(text) => setCounty(text)}
+                      placeholder="İlçe Giriniz"
+                    />
+                    <CustomInput
+                      value={zipCode}
+                      onChangeText={(text) => setZipCode(text)}
+                      placeholder="Posta Kodu Giriniz"
+                    />
+                    <View style={{ alignItems: "center" }}>
+                      <CustomButton title="Ara" onPress={() => searchData()} />
+                    </View>
+                  </View>
+                ) : null}
               </View>
 
               <View>
@@ -319,7 +336,7 @@ export default function Home({ navigation }) {
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal: 20
+                    paddingHorizontal: 20,
                   }}
                 >
                   <Text

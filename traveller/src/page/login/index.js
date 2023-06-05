@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../component/CustomInput";
@@ -25,39 +25,35 @@ export default function Login({ navigation }) {
   const handleLogin = () => {
     let data = JSON.stringify({
       username,
-      password
+      password,
     });
 
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
-      url: 'https://travellerbackend.herokuapp.com/login',
+      url: "http://127.0.0.1:5000/login",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         if (response?.data?.message === "Login basarili") {
           AsyncStorage.setItem("user", data).then(() => {
-            navigation.navigate("TabNavigatorComponent")
-          })
-        }
-        else {
-          alert(response?.data?.message)
-          navigation.navigate("TabNavigatorComponent")
+            navigation.navigate("TabNavigatorComponent");
+          });
+        } else {
+          alert(response?.data?.message);
+          navigation.navigate("TabNavigatorComponent");
         }
       })
       .catch((error) => {
         console.log(error);
       });
-
-
-
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -75,7 +71,7 @@ export default function Login({ navigation }) {
           placeholder="Şifre"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry
+          secureTextEntry={true}
         />
 
         <CustomButton title="Giriş" onPress={handleLogin} />
