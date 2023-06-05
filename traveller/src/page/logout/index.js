@@ -10,7 +10,7 @@ export default function Logout() {
     // ...
 
     // Son olarak, TabNavigator sayfasına yönlendirin
-    navigation.navigate('Login');
+    navigation.navigate('Giriş');
   };
 
   return (

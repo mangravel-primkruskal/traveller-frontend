@@ -19,8 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const cardViewHeight = 150;
 
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("irem");
+  const [password, setPassword] = useState("123456789");
 
   const handleLogin = () => {
     let data = JSON.stringify({
@@ -41,17 +41,21 @@ export default function Login({ navigation }) {
     axios
       .request(config)
       .then((response) => {
+        console.log("login response", response)
         if (response?.data?.message === "Login basarili") {
+          console.log("test giriş başarılı")
           AsyncStorage.setItem("user", data).then(() => {
             navigation.navigate("TabNavigatorComponent");
           });
         } else {
+          console.log("test giriş başarısız")
           alert(response?.data?.message);
           navigation.navigate("TabNavigatorComponent");
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Hata bulundu login page",error);
+        navigation.navigate("TabNavigatorComponent");
       });
   };
 

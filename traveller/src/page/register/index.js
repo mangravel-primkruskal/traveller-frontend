@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "../../component/CustomButton";
@@ -17,10 +18,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const cardViewHeight = 150;
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useState("");
-  const [email, setemail] = useState("");
-  const [full_name, setfull_name] = useState("");
-  const [password, setpassword] = useState("");
+  const [username, setUsername] = useState("irems");
+  const [email, setemail] = useState("irm@gmac.c");
+  const [phone, setphone] = useState("5054043041");
+  const [city, setcity] = useState("Ankara");
+  const [county, setcounty] = useState("Etimesgut");
+  const [full_name, setfull_name] = useState("Rukiye Sarısoy");
+  const [password, setpassword] = useState("123456789");
 
   const clickToRegister = () => {
     let data = JSON.stringify({
@@ -29,12 +33,15 @@ export default function Register({ navigation }) {
       email: email,
       password: password,
       confirm_password: password,
+      city: city,
+      phone: phone,
+      county: county,
     });
-    console.log(data)
+    console.log(data);
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/register",
+      url: "http://localhost:5000/register",
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,74 +51,95 @@ export default function Register({ navigation }) {
     axios
       .request(config)
       .then((response) => {
-        return  navigation.navigate("TabNavigatorComponent")
         if (response?.data?.message === "Kullanıcı başarıyla kaydedildi") {
+          alert("Backend response ", response?.data?.message);
           AsyncStorage.setItem("user", data).then(() => {
-            navigation.navigate("TabNavigatorComponent")
-          })
+            navigation.navigate("TabNavigatorComponent");
+          });
+        } else {
+          alert(response?.data?.message);
+          // return  navigation.navigate("TabNavigatorComponent")
         }
-        else {
-          alert(response?.data?.message)
-        }
-
       })
       .catch((error) => {
-        navigation.navigate("TabNavigatorComponent")
+        console.log(JSON.stringify(error));
+        navigation.navigate("TabNavigatorComponent");
       });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          position: "relative",
-          marginVertical: 10,
-          justifyContent: "center",
-          alignItems: "center",
-          marginHorizontal: 20,
-          marginTop: 30,
-        }}
-      >
-        <Image
-          source={logo}
+      <KeyboardAvoidingView>
+        <View
           style={{
-            width: 250,
-            height: 250,
-            resizeMode: "stretch",
+            position: "relative",
             marginVertical: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            marginHorizontal: 20,
+            marginTop: 30,
           }}
-        />
-        <CustomInput
-          placeholder="Ad Soyad"
-          iconName="user"
-          value={full_name}
-          iconType="font-awesome"
-          onChangeText={(text) => setfull_name(text)}
-        />
-        <CustomInput
-          placeholder="E-posta"
-          iconName="envelope"
-          value={email}
-          iconType="font-awesome"
-          onChangeText={(text) => setemail(text)}
-        />
-        <CustomInput
-          placeholder="Kullanıcı Adı"
-          iconName="user"
-          value={username}
-          iconType="font-awesome"
-          onChangeText={(text) => setUsername(text)}
-        />
-        <CustomInput
-          placeholder="Şifre"
-          iconName="lock"
-          iconType="font-awesome"
-          value={password}
-          onChangeText={(text) => setpassword(text)}
-          secureTextEntry={true}
-        />
-        <CustomButton title="Kayıt Ol" onPress={() => clickToRegister()} />
-      </View>
+        >
+          <ScrollView>
+            <Image
+              source={logo}
+              style={{
+                width: 250,
+                height: 250,
+                resizeMode: "stretch",
+                marginVertical: 10,
+              }}
+            />
+            <CustomInput
+              placeholder="Ad Soyad"
+              iconName="user"
+              value={full_name}
+              iconType="font-awesome"
+              onChangeText={(text) => setfull_name(text)}
+            />
+            <CustomInput
+              placeholder="Telefon Numarası"
+              iconName="phone"
+              value={phone}
+              iconType="font-awesome"
+              onChangeText={(text) => setphone(text)}
+            />
+            <CustomInput
+              placeholder="E-posta"
+              iconName="envelope"
+              value={email}
+              iconType="font-awesome"
+              onChangeText={(text) => setemail(text)}
+            />
+            <CustomInput
+              placeholder="Şehir"
+              value={city}
+              onChangeText={(text) => setcity(text)}
+            />
+            <CustomInput
+              placeholder="İlçe"
+              value={county}
+              onChangeText={(text) => setcounty(text)}
+            />
+            <CustomInput
+              placeholder="Kullanıcı Adı"
+              iconName="user"
+              value={username}
+              iconType="font-awesome"
+              onChangeText={(text) => setUsername(text)}
+            />
+            <CustomInput
+              placeholder="Şifre"
+              iconName="lock"
+              iconType="font-awesome"
+              value={password}
+              onChangeText={(text) => setpassword(text)}
+              secureTextEntry={true}
+            />
+            <CustomButton title="Kayıt Ol" onPress={() => clickToRegister()} />
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
