@@ -11,8 +11,8 @@ export default function Logout() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      // url: 'http://127.0.0.1:5000/logout',
-      url:'http://travellerbackend.herokuapp.com/logout',
+     url: 'http://10.0.2.2:5000/logout',
+     //url:'http://travellerbackend2.herokuapp.com/logout',
       headers: { },
       data : data
     };

@@ -55,7 +55,8 @@ export default function UpdateProfile({ navigation }) {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: "https://travellerbackend.herokuapp.com/user/update",
+      //url: "https://travellerbackend2.herokuapp.com/user/update",
+      url:"http://10.0.2.2:5000/user/update",
       headers: {
         "Content-Type": "application/json",
       },

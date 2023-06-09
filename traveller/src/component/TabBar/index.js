@@ -15,7 +15,10 @@ import SearchList from '../../page/searchList';
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigatorComponent() {
+export default function TabNavigatorComponent({navigation}) {
+  const handleNotifications=(()=>{
+    navigation.navigate("Notifications")
+  })
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
       <Tab.Screen
@@ -28,12 +31,15 @@ export default function TabNavigatorComponent() {
           ),
           headerRight: () => (
             <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+              onPress={()=>handleNotifications()}>
               <Ionicons
                 name="notifications"
                 style={{ marginRight: 16 }}
                 size={24}
                 color="white"
               />
+              </TouchableOpacity>
               <Logout/>
             </View>
           ),

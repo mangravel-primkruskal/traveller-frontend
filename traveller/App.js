@@ -11,6 +11,8 @@ import Register from "./src/page/register";
 import ForgotPassword from "./src/page/forgotPassword";
 import GoogleMaps from "./src/page/maps/googleMaps";
 import UpdateProfile from "./src/page/profile/updateProfile";
+import FriendList from "./src/page/friendsList";
+import Notifications from "./src/page/notifications";
 
 const Stack = createStackNavigator();
 
@@ -49,6 +51,26 @@ export default function App() {
               </Text>
             ),
           }} />
+           <Stack.Screen
+          name="FriendList"
+          component={FriendList}
+          options={{
+            headerTitle: () => (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Arkadaşlarını Bul
+              </Text>
+            ),}}
+        />
+         <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{
+            headerTitle: () => (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Bildirimler
+              </Text>
+            ),}}
+        />
         <Stack.Screen
           name="GoogleMaps"
           component={GoogleMaps}
@@ -59,6 +81,8 @@ export default function App() {
           component={UpdateProfile}
           options={{ headerShown: true }}
         />
+        
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

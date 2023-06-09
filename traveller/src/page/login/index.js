@@ -19,21 +19,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const cardViewHeight = 150;
 
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState("irem");
-  const [password, setPassword] = useState("1234567899");
+  const [username, setUsername] = useState("iremsu");
+  const [password, setPassword] = useState("123456789");
 
   const handleLogin = () => {
-    console.log("hey")
+    console.log("hey in login dostum");
     let data = JSON.stringify({
-      username:username,
-      password:password,
+      username: username,
+      password: password,
     });
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      //url: "http://1010.0.2.2:5000/login",
-      url: "https://travellerbackend.herokuapp.com/login",
+      url: "http://10.0.2.2:5000/login",
+      //url: "https://travellerbackend2.herokuapp.com/login",
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,20 +43,21 @@ export default function Login({ navigation }) {
     axios
       .request(config)
       .then((response) => {
-        console.log("login response", response)
-        if (response?.data?.message === "Login basarili") {
-          console.log("test giriş başarılı")
+        console.log("login response", response);
+        if (response?.data?.message === "Login başarılı") {
+          console.log("test giriş başarılı");
           AsyncStorage.setItem("user", data).then(() => {
             navigation.navigate("TabNavigatorComponent");
           });
         } else {
-          console.log("test giriş başarısız")
+          console.log("test giriş başarısız", response.message);
           alert(response?.data?.message);
           navigation.navigate("TabNavigatorComponent");
         }
       })
       .catch((error) => {
-        console.log("Hata bulundu login page",error);
+        console.log("Hata bulundu login page", error);
+         console.log(JSON.stringify(error));
         navigation.navigate("TabNavigatorComponent");
       });
   };
@@ -80,7 +81,7 @@ export default function Login({ navigation }) {
           secureTextEntry={true}
         />
 
-        <CustomButton title="Giriş" onPress={()=>handleLogin()} />
+        <CustomButton title="Giriş" onPress={() => handleLogin()} />
 
         <TouchableOpacity
           style={styles.forgotPasswordButton}

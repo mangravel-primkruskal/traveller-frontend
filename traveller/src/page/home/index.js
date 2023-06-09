@@ -89,8 +89,11 @@ export default function Home({ navigation }) {
     }
   };
 
+  const onFollow=async()=>{
+    return navigation.navigate("FriendList");
+  }
+
   const searchData = () => {
-    return navigation.navigate("Arama Sonuçları");
     let data = JSON.stringify({
       keyword: selectedOutdoorType,
       radius: dummyRadiusData.filter((text) => text.state === selectedRadius)[0]
@@ -104,15 +107,15 @@ export default function Home({ navigation }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      //url: "http://127.0.0.1:5000/contentrecyeni",
-      url: "http://travellerbackend.herokuapp.com/contentrecyeni",
+      //url: "http://10.0.2.2:5000/contentrecyeni",
+      url: "https://travellerbackend2.herokuapp.com/contentrecyeni",
       headers: {
         "Content-Type": "application/json",
       },
       data: data,
     };
 
-    console.log("config arama sayfası",conf)
+    //console.log("config arama sayfası",conf)
     axios
       .request(config)
       .then((response) => {
@@ -122,6 +125,8 @@ export default function Home({ navigation }) {
       .catch((error) => {
         alert(error);
       });
+
+    return navigation.navigate("Arama Sonuçları");
   };
 
   return (
@@ -329,7 +334,28 @@ export default function Home({ navigation }) {
                   </View>
                 ) : null}
               </View>
-
+              <View>
+              <TouchableOpacity
+                  onPress={() => onFollow()}
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
+                    paddingHorizontal: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Arkadaşlarını Takip Et
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <View>
                 <TouchableOpacity
                   onPress={() => onShare()}
@@ -351,6 +377,7 @@ export default function Home({ navigation }) {
                     Arkadaşlarınla Paylaş
                   </Text>
                 </TouchableOpacity>
+                
               </View>
             </View>
           </View>

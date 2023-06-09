@@ -112,7 +112,6 @@ export default function Profile({ navigation, route }) {
                       <TouchableOpacity
                         // tıklanınca profil düzenleme açılır
                         onPress={(event) => {
-                          console.log("testtt", event);
                           navigation.navigate("Profili Güncelle");
                         }}
                         style={{
