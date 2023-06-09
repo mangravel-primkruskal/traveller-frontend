@@ -20,8 +20,8 @@ const cardViewHeight = 150;
 
 export default function UpdateProfile({ navigation }) {
   const [user, setUser] = useState([]);
-  const [username, setUsername] = useState("irems");
-  const [email, setEmail] = useState("irm@gmac.c");
+  const [username, setUsername] = useState("irem66");
+  const [email, setEmail] = useState("irem66@gmail.com");
   const [phone, setphone] = useState("5054043041");
   const [city, setcity] = useState("Ankara");
   const [county, setcounty] = useState("Etimesgut");
@@ -33,12 +33,12 @@ export default function UpdateProfile({ navigation }) {
     AsyncStorage.getItem("user").then((data) => {
       setUser(JSON.parse(data));
       console.log(user)
-      setUsername(user.username)
-      setEmail(user.email)
-      setPassword(user.password)
-      setphone(user.phone)
-      setcounty(user.county)
-      setcity(user.city)
+      // setUsername(user.username)
+      // setEmail(user.email)
+      // setPassword(user.password)
+      // setphone(user.phone)
+      // setcounty(user.county)
+      // setcity(user.city)
     });
   }, []);
 
@@ -68,12 +68,14 @@ export default function UpdateProfile({ navigation }) {
       .then((response) => {
         console.log(config,"config")
         console.log(JSON.stringify(response.data));
+        alert(response.data.message)
       })
       .catch((error) => {
         console.log("error in update profile")
         alert(JSON.stringify(error))
         console.log(JSON.stringify(error));
       });
+      navigation.navigate('Profil');
   };
 
   return (

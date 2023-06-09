@@ -103,19 +103,19 @@ export default function Home({ navigation }) {
       county: county,
       zip_code: zipCode,
     });
+    console.log("config arama sayfası istek verileri",data)
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      //url: "http://10.0.2.2:5000/contentrecyeni",
-      url: "https://travellerbackend2.herokuapp.com/contentrecyeni",
+      url: "http://10.0.2.2:5000/contentrecyeni",
+      //url: "https://travellerbackend2.herokuapp.com/contentrecyeni",
       headers: {
         "Content-Type": "application/json",
       },
       data: data,
     };
 
-    //console.log("config arama sayfası",conf)
     axios
       .request(config)
       .then((response) => {
@@ -126,7 +126,7 @@ export default function Home({ navigation }) {
         alert(error);
       });
 
-    return navigation.navigate("Arama Sonuçları");
+   
   };
 
   return (

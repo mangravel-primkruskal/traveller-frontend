@@ -55,22 +55,23 @@ export default function FriendList({ navigation, route }) {
     } else setFilteredData(data);
   }, [searchKey]);
 
-  const onFollow = (username) => {
-    console.log("baglanti kurulacak kisi: ", username);
+  const onFollow = (object_id) => {
+    console.log("baglanti kurulacak kisi: ", object_id);
     try {
-      if (username) {
+      if (object_id) {
         let config = {
-          method: "get",
+          method: "post",
           maxBodyLength: Infinity,
           //url: "https://travellerbackend2.herokuapp.com/list/users/" + username,
-          url:"http://10.0.2.2:5000/list/users/" + username,
+          url:"http://10.0.2.2:5000/send_friend_request/" + object_id,
           headers: {},
         };
         axios
           .request(config)
           .then((response) => {
             console.log("response", response);
-            alert("Kullanıcıya takip isteği atıldı");
+            alert(response?.data?.message);
+            console.log(JSON.stringify(response));
             console.log(JSON.stringify(response.data));
             setData(response.data);
           })
@@ -78,7 +79,9 @@ export default function FriendList({ navigation, route }) {
             console.log(error);
           });
       }
-    } catch (error) {}
+    } catch (error) {
+        console.log("here catchte",error)
+    }
   };
 
   // useEffect(() => {
@@ -153,7 +156,7 @@ export default function FriendList({ navigation, route }) {
               <View style={{ flex: 1, justifyContent: "center" }}>
                 {/* <Text>Puan: {item?.namesurname}</Text> */}
                 <TouchableOpacity
-                  onPress={() => onFollow(item?.username)}
+                  onPress={() => onFollow(item.object_id)}
                   style={{
                     padding: 10,
                     marginTop: 10,
@@ -165,7 +168,7 @@ export default function FriendList({ navigation, route }) {
                   }}
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
-                    Takip Et
+                    Arkadaşlık İsteği Gönder
                   </Text>
                 </TouchableOpacity>
               </View>

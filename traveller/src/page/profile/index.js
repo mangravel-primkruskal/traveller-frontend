@@ -86,17 +86,20 @@ export default function Profile({ navigation, route }) {
                       color: "#4B9D3D",
                     }}
                   >
-                    {user?.username}
+                    {user?.full_name}
                   </Text>
 
-                  <Text style={{ color: "#4B9D3D" }}>Şarkıcı</Text>
+                  <Text style={{ color: "#4B9D3D" }}> {user?.username}</Text>
 
                   <View style={{ flexDirection: "row", margin: 5 }}>
                     <View style={{ flex: 2 }}>
                       <TouchableOpacity
+                       onPress={(event) => {
+                        navigation.navigate("Profili Güncelle");
+                      }}
                         style={{
                           backgroundColor: "green",
-                          width: 100,
+                          width: 150,
                           height: 30,
                           borderRadius: 15,
                           padding: 3,
@@ -104,12 +107,13 @@ export default function Profile({ navigation, route }) {
                           justifyContent: "center",
                         }}
                       >
-                        <Text style={{ color: "white" }}>Takip Et</Text>
+                        <Text style={{ color: "white" }}>Profili Düzenle</Text>
+                        {/* <AntDesign name="setting" size={5} color="white" /> */}
                       </TouchableOpacity>
                     </View>
 
                     <View style={{ flex: 1 }}>
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         // tıklanınca profil düzenleme açılır
                         onPress={(event) => {
                           navigation.navigate("Profili Güncelle");
@@ -124,7 +128,7 @@ export default function Profile({ navigation, route }) {
                         }}
                       >
                         <AntDesign name="setting" size={28} color="white" />
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                     </View>
                   </View>
                 </View>

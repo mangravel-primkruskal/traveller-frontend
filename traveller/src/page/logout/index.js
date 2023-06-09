@@ -20,7 +20,7 @@ export default function Logout() {
     axios.request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
-      alert(JSON.stringify(response.data), "Giriş Sayfasına Yönlendirileceksiniz")
+      alert(JSON.stringify(response.data.message), "Giriş Sayfasına Yönlendirileceksiniz")
     })
     .catch((error) => {
       console.log(error);

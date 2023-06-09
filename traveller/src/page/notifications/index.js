@@ -36,8 +36,8 @@ export default function Notifications({ navigation, route }) {
       .then((response) => {
         if (response?.data) {
           console.log("response data", response?.data?.friend_requests);
-          setFilteredData(response?.data?.all_users);
-          setData(response?.data?.all_users);
+          setFilteredData(response?.data?.friend_requests);
+          setData(response?.data?.friend_requests);
         }
         // console.log(JSON.stringify(response.data));
       })
@@ -47,6 +47,31 @@ export default function Notifications({ navigation, route }) {
       });
   }, []);
 
+  const onAccept=((receiver_id)=>{
+   
+    let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        //url: "https://travellerbackend2.herokuapp.com/get_friend_request",
+        url:"http://10.0.2.2:5000/accept_friend_request/"+receiver_id,
+        headers: {},
+      };
+      axios
+        .request(config)
+        .then((response) => {
+            console.log(response)
+          if (response?.data) {
+            console.log("response data", response?.data?.message);
+            alert(response?.data?.message)
+          }
+          // console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log("kabul ederken hata")
+          console.log(error);
+        });
+    
+  })
 
   return (
     <SafeAreaView
@@ -54,7 +79,7 @@ export default function Notifications({ navigation, route }) {
         flex: 1,
       }}
     >
-      <View style={{ flexDirection: "row", marginTop: 20 }}>
+      {/* <View style={{ flexDirection: "row", marginTop: 20 }}>
         <TextInput
           placeholder="Aranacak kelime"
           value={searchKey}
@@ -79,8 +104,27 @@ export default function Notifications({ navigation, route }) {
         >
           <Text>Ara</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <ScrollView>
+      <View
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
+                    paddingHorizontal: 40,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Arkadaşlık İstekleri
+                  </Text>
+                </View>
         {filteredData &&
           filteredData.map((item) => (
             <View
@@ -90,6 +134,7 @@ export default function Notifications({ navigation, route }) {
                 borderBottomWidth: 1,
               }}
             >
+             
               <View style={{ flex: 1 }}>
                 <Image
                   source={
@@ -110,13 +155,14 @@ export default function Notifications({ navigation, route }) {
                     fontSize: 16,
                   }}
                 >
-                  {item?.username}
+                  {item?.sender_username[0]} 
                 </Text>
+                <Text>size bir arkadaşlık isteği gönderdi</Text>
               </View>
               <View style={{ flex: 1, justifyContent: "center" }}>
                 {/* <Text>Puan: {item?.namesurname}</Text> */}
                 <TouchableOpacity
-                  onPress={() => onFollow(item?.username)}
+                  onPress={() => onAccept(item?.receiver_id)}
                   style={{
                     padding: 10,
                     marginTop: 10,
@@ -128,7 +174,7 @@ export default function Notifications({ navigation, route }) {
                   }}
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
-                    Takip Et
+                    Kabul Et
                   </Text>
                 </TouchableOpacity>
               </View>
