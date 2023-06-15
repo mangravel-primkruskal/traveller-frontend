@@ -58,10 +58,10 @@ export default function AddContent({ navigation }) {
             multiline={true}
             numberOfLines={5}
           />
-          <CustomInput
+          {/* <CustomInput
             placeholder="Adresiniz"
             secureTextEntry={false}
-          />
+          /> */}
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <CustomButton title="Yeni Gönderi Ekle" />
           </View>

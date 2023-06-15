@@ -77,6 +77,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
                   style={{ color: "black", fontSize: 20 }}
                 />
               )}
+                
               <Text style={{ marginTop: 5 }}>{label}</Text>
             </TouchableOpacity>
           );

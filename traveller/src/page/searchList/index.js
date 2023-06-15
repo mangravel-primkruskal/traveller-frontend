@@ -44,6 +44,26 @@ export default function SearchList({ navigation, route }) {
         flex: 1,
       }}
     >
+      <TouchableOpacity
+                  onPress={() => onFollow()}
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
+                    paddingHorizontal: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    {route?.params?.radius} uzalıktaki {route?.params?.category} Mekanları
+                  </Text>
+                </TouchableOpacity>
       <ScrollView>
         {data.map((item) => (
           <View
@@ -67,7 +87,7 @@ export default function SearchList({ navigation, route }) {
             
 
             <TouchableOpacity
-              onPress={() => Linking.openURL(item["Google Maps URL"])}
+              onPress={() => Linking.openURL("https://www.google.com/maps/place/?q="+item.Address+item.Name)}
               style={{
                 padding: 10,
                 marginTop: 10,

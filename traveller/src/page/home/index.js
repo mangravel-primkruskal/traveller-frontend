@@ -16,6 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import CustomInput from "../../component/CustomInput";
 import CustomButton from "../../component/CustomButton";
 import axios from "axios";
+import * as Location from "expo-location"; //RIS 20.05.2023
 
 const demoData = [
   { test: "test" },
@@ -67,12 +68,24 @@ export default function Home({ navigation }) {
   const [city, setCity] = useState("Ankara");
   const [county, setCounty] = useState("Eryaman");
   const [zipCode, setZipCode] = useState("06824");
-
+  const [location, setLocation] = useState(null);
+  
   useEffect(() => {
     AsyncStorage.getItem("user").then((data) => {
       setUser(JSON.parse(data));
     });
   }, []);
+
+  
+   useEffect(()=>{
+    const result= async()=>{
+      let location =  await Location.getCurrentPositionAsync({});
+    if(location){
+      setLocation(location);
+    }
+    }
+    result();
+   },[location]);
 
   const onShare = async () => {
     const result = await Share.share({
@@ -93,7 +106,65 @@ export default function Home({ navigation }) {
     return navigation.navigate("FriendList");
   }
 
+  const searchDataFromLatLong=()=>{
+    const permission = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("error");
+          setErrorMsg("Permission to access location was denied");
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.High});
+        if (location) {
+          setLocation(location);
+          console.log("first location", location);
+        }
+      } catch (error) {
+        console.log("ERROR:::", error);
+      }
+    };
+    permission();
+
+
+    if(location){
+      console.log(location,"locatiooonnn")
+      // http://127.0.0.1:5000/contentrec/+lat+"/"+long+"/"
+      let data = JSON.stringify({
+       keyword: selectedOutdoorType,
+       radius: dummyRadiusData.filter((text) => text.state === selectedRadius)[0]
+         .value
+     });
+     console.log("config arama sayfası istek verileri",data)
+       console.log("what is url","http://10.0.2.2:5000/contentrec/"+location.coords.latitude+"/"+location.coords.longitude+"/")
+     let config = {
+       method: "post",
+       maxBodyLength: Infinity,
+       url: "http://10.0.2.2:5000/contentrec/"+location.coords.latitude+"/"+location.coords.longitude+"/",
+       //url: "https://travellerbackend2.herokuapp.com/contentrecyeni",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       data: data,
+     };
+ 
+     console.log("config"+config)
+     axios
+       .request(config)
+       .then((response) => {
+         console.log("arama sonuçları lat long ile ",response.data);
+         navigation.navigate("Arama Sonuçları", { data: response.data,category: selectedOutdoorType,radius:selectedRadius});
+        
+       })
+       .catch((error) => {
+         alert(error);
+       });
+ 
+     }
+  }
+
   const searchData = () => {
+    
     let data = JSON.stringify({
       keyword: selectedOutdoorType,
       radius: dummyRadiusData.filter((text) => text.state === selectedRadius)[0]
@@ -119,7 +190,7 @@ export default function Home({ navigation }) {
     axios
       .request(config)
       .then((response) => {
-        navigation.navigate("Arama Sonuçları", { data: response.data });
+        navigation.navigate("Arama Sonuçları", { data: response.data,category: selectedOutdoorType,radius:selectedRadius });
         console.log(response.data);
       })
       .catch((error) => {
@@ -308,6 +379,51 @@ export default function Home({ navigation }) {
                 </View>
                 {selectedOutdoorType !== null && selectedRadius !== null ? (
                   <View style={{ paddingVertical: 20 }}>
+                   
+                   {/* Konumumu kullan kısmı */}
+                   <View>
+              {/* <TouchableOpacity
+                  onPress={() => searchDataFromLatLong()}
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                    justifyContent: "flex-start",
+                    width: "80%",
+                    paddingHorizontal: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    Konumumu Kullanarak Ara
+                  </Text>
+                </TouchableOpacity> */}
+                 <View style={{ alignItems: "center" }}>
+                      <CustomButton title="Konumumu Kullanarak Ara" onPress={() => searchDataFromLatLong()} />
+                    </View>
+              </View>
+              <View
+                 
+                  style={{
+                    alignItems:"center",
+                    width: "100%",
+                    marginVertical:5
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "700",
+                      color: "#4B9D3D",
+                    }}
+                  >
+                    veya
+                  </Text>
+                </View>
                     <CustomInput
                       value={country}
                       onChangeText={(text) => setCountry(text)}
@@ -338,11 +454,15 @@ export default function Home({ navigation }) {
               <TouchableOpacity
                   onPress={() => onFollow()}
                   style={{
-                    marginTop: 30,
+                    marginTop: 40,
                     marginBottom: 30,
                     justifyContent: "flex-start",
                     width: "80%",
-                    paddingHorizontal: 20,
+                    padding: 20,
+                    borderColor:"green",
+                    borderWidth:2,
+                    borderRadius:50
+
                   }}
                 >
                   <Text
@@ -352,7 +472,7 @@ export default function Home({ navigation }) {
                       color: "#4B9D3D",
                     }}
                   >
-                    Arkadaşlarını Takip Et
+                    Arkadaşlarını Bul
                   </Text>
                 </TouchableOpacity>
               </View>

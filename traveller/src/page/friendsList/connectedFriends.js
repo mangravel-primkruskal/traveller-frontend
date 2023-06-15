@@ -18,45 +18,42 @@ import CustomInput from "../../component/CustomInput";
 import CustomButton from "../../component/CustomButton";
 import axios from "axios";
 import defaultProfilePhoto from "../../../assets/def_profile_photo.webp";
-export default function FriendList({ navigation, route }) {
+export default function ConnectedFriendsList({ navigation, route }) {
   const [searchKey, setSearchKey] = useState("");
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
 
-  useEffect(() => {
+  useEffect(()=>{
+
     let config = {
-      method: "get",
+      method: 'get',
       maxBodyLength: Infinity,
-      //url: "https://travellerbackend2.herokuapp.com/getallusers",
-      url:"http://10.0.2.2:5000/getallusers",
-      headers: {},
+      url: 'http://10.0.2.2:5000/user_friend/',
+      headers: { }
     };
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data) {
-          setFilteredData(response?.data?.all_users);
-          setData(response?.data?.all_users);
-        }
-        // console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    
+    axios.request(config)
+    .then((response) => {
+        setData(response?.data.user_friends)
+        setFilteredData(response?.data.user_friends)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    
+  },[])
+
 
   useEffect(() => {
     if (searchKey.length > 0&&searchKey!= undefined) {
-      if(filteredData){
-        setFilteredData(
-          data.filter((item) => item?.username?.indexOf(searchKey) != -1)
-        );
-      }
-      
+      setFilteredData(
+        data.filter((item) => item?.friend_username?.indexOf(searchKey) != -1)
+      );
     } else setFilteredData(data);
   }, [searchKey]);
 
-  const onFollow = (object_id) => {
+  const onUnFollow = (object_id) => {
+    console.log("baglanti kurulacak kisi: ", object_id);
     try {
       if (object_id) {
         let config = {
@@ -69,8 +66,11 @@ export default function FriendList({ navigation, route }) {
         axios
           .request(config)
           .then((response) => {
+            console.log("response", response);
             alert(response?.data?.message);
-           
+            console.log(JSON.stringify(response));
+            console.log(JSON.stringify(response.data));
+            setData(response.data);
           })
           .catch((error) => {
             console.log(error);
@@ -81,9 +81,7 @@ export default function FriendList({ navigation, route }) {
     }
   };
 
-  // useEffect(() => {
-  //  data=props.data;
-  // }, []);
+  
 
   return (
     <SafeAreaView
@@ -116,12 +114,10 @@ export default function FriendList({ navigation, route }) {
             justifyContent: "center",
             alignItems: "center",
             marginHorizontal: 10,
-            borderRadius:100
+            borderRadius:40
           }}
         >
           <Text>Ara</Text>
-{/* 
-          <AntDesign name="search" size={44} color="#F95656" /> */}
         </TouchableOpacity>
       </View>
       <ScrollView>
@@ -154,13 +150,13 @@ export default function FriendList({ navigation, route }) {
                     fontSize: 16,
                   }}
                 >
-                  {item?.username}
+                  {item?.friend_username}
                 </Text>
               </View>
-              <View style={{ flex: 1, justifyContent: "center" }}>
+              <View style={{ flex: 2, justifyContent: "center" }}>
                 {/* <Text>Puan: {item?.namesurname}</Text> */}
                 <TouchableOpacity
-                  onPress={() => onFollow(item.object_id)}
+                  onPress={() => onUnFollow(item.friend_id)}
                   style={{
                     padding: 10,
                     marginTop: 10,
@@ -172,7 +168,7 @@ export default function FriendList({ navigation, route }) {
                   }}
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
-                    Arkadaşlık İsteği Gönder
+                    Arkadaşlarımdan Çıkar
                   </Text>
                 </TouchableOpacity>
               </View>

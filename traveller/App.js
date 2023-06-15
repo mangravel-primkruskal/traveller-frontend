@@ -13,7 +13,7 @@ import GoogleMaps from "./src/page/maps/googleMaps";
 import UpdateProfile from "./src/page/profile/updateProfile";
 import FriendList from "./src/page/friendsList";
 import Notifications from "./src/page/notifications";
-
+import ConnectedFriendsList from "./src/page/friendsList/connectedFriends";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -61,6 +61,17 @@ export default function App() {
               </Text>
             ),}}
         />
+         <Stack.Screen
+          name="ConnectedFriendsList"
+          component={ConnectedFriendsList}
+          options={{
+            headerTitle: () => (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Arkadaşlarım
+              </Text>
+            ),}}
+        />
+        
          <Stack.Screen
           name="Notifications"
           component={Notifications}

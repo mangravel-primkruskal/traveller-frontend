@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 // import colors from "../../constant/colors";
-
+import axios from "axios";
 import { AntDesign } from "@expo/vector-icons"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -29,6 +29,7 @@ export default function Profile({ navigation, route }) {
 
   const [user, setUser] = useState([{ username: "" }])
 
+  const [friendsCount, setFriendsCount] = useState([])
 
   useEffect(() => {
     AsyncStorage.getItem("user").then((data) => {
@@ -36,6 +37,31 @@ export default function Profile({ navigation, route }) {
     })
   }, [])
 
+
+  useEffect(()=>{
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://10.0.2.2:5000/user_friend/',
+      headers: { }
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(response?.data?.user_friends.length);
+      setFriendsCount(response?.data?.user_friends.length)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    
+  },[])
+
+  const openUserFriendsList = () => {
+    navigation.navigate("ConnectedFriendsList")
+  }
+ 
 
   return (
     <SafeAreaView
@@ -146,7 +172,8 @@ export default function Profile({ navigation, route }) {
                   marginTop: 10
                 }}
               >
-                <View
+                <TouchableOpacity
+                  onPress={()=>openUserFriendsList()}
                   style={{
                     height: 60,
                     width: 220,
@@ -165,7 +192,7 @@ export default function Profile({ navigation, route }) {
                       fontWeight: "900",
                     }}
                   >
-                    45
+                    {friendsCount}
                   </Text>
                   <Text
                     style={{
@@ -173,11 +200,11 @@ export default function Profile({ navigation, route }) {
                       color: "black",
                     }}
                   >
-                    Takipçi
+                    Arkadaşlar
                   </Text>
-                </View>
+                </TouchableOpacity>
 
-                <View
+                {/* <View
                   style={{
                     height: 60,
                     width: 220,
@@ -206,7 +233,7 @@ export default function Profile({ navigation, route }) {
                   >
                     Takip Edilen
                   </Text>
-                </View>
+                </View> */}
                 <View
                   style={{
                     height: 60,

@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#4B9D3D",
     color: "gray",
-    width: 150,
-    height: 40,
+    minWidth: 150,
+    minHeight: 40,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
